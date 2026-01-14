@@ -1,64 +1,182 @@
-import Image from "next/image";
+import Link from "next/link";
+import { getAllPosts } from "@/lib/posts";
+import { ArrowRight, Github, Linkedin, Mail, ExternalLink } from "lucide-react";
+import ThemeToggle from "@/components/theme-toggle";
+import Footer from "@/components/footer";
 
-export default function Home() {
+export default function HomePage() {
+  const posts = getAllPosts().slice(0, 3);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <main className="max-w-4xl mx-auto px-6 py-16 md:py-24">
+        {/* Hero Section */}
+        <header className="mb-20">
+          <div className="relative">
+            <div className="absolute -top-4 -left-4 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[pulse_4s_ease-in-out_infinite]"></div>
+            <div className="absolute -bottom-8 right-8 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[pulse_4s_ease-in-out_infinite] [animation-delay:2s]"></div>
+
+            <div className="relative">
+              <div className="inline-block mb-4">
+                <span className="px-4 py-1.5 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-full shadow-lg">
+                  Available for opportunities
+                </span>
+              </div>
+
+              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-600 dark:from-slate-100 dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
+                Hi, I'm Rahul 👋
+              </h1>
+
+              <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+                Software developer crafting elegant solutions to complex
+                problems. Writing about{" "}
+                <span className="font-semibold text-slate-900 dark:text-white">
+                  engineering
+                </span>
+                ,
+                <span className="font-semibold text-slate-900 dark:text-white">
+                  {" "}
+                  AI
+                </span>
+                , and building
+                <span className="font-semibold text-slate-900 dark:text-white">
+                  {" "}
+                  things that matter
+                </span>
+                .
+              </p>
+
+              <nav
+                className="flex flex-wrap gap-4 mt-8"
+                aria-label="Primary actions"
+              >
+                <Link
+                  href="#contact"
+                  className="group px-6 py-3 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+                >
+                  Get in touch
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  href="#work"
+                  className="px-6 py-3 bg-white border-2 border-slate-900 text-slate-900 rounded-lg font-medium hover:bg-slate-50 transition-all shadow-md"
+                >
+                  View my work
+                </Link>
+              </nav>
+            </div>
+          </div>
+        </header>
+
+        {/* Latest Writing */}
+        <section className="mb-20" aria-labelledby="latest-writing">
+          <div className="flex items-center justify-between mb-8">
+            <h2
+              id="latest-writing"
+              className="text-3xl font-bold text-slate-900 dark:text-white"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Latest Writing
+            </h2>
+            <Link
+              href="/blog"
+              className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium flex items-center gap-2 group"
             >
-              Learning
-            </a>{" "}
-            center.
+              View all
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          <div className="grid gap-6">
+            {posts.map((post, index) => (
+              <article
+                key={post.slug}
+                className="animate-[fadeInUp_0.5s_ease-out_both]"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="group relative block bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ExternalLink className="w-5 h-5 text-slate-400 dark:text-slate-500" />
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500 dark:text-slate-400 mb-3">
+                    <time dateTime={post.date}>{post.date}</time>
+                    <span
+                      className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600"
+                      aria-hidden="true"
+                    ></span>
+                    <span>{post.readingTime}</span>
+                  </div>
+
+                  <h3 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-white mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                    {post.title}
+                  </h3>
+
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {post.excerpt ||
+                      `${post.title} - Read more about this topic.`}
+                  </p>
+
+                  <div className="mt-4 flex items-center gap-2 text-purple-600 dark:text-purple-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                    Read article
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* Connect Section */}
+        <section
+          className="bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-8 md:p-12 text-white shadow-2xl"
+          aria-labelledby="connect"
+        >
+          <h2 id="connect" className="text-3xl font-bold mb-4">
+            Let's Connect
+          </h2>
+          <p className="text-slate-300 dark:text-slate-400 text-lg mb-8 max-w-2xl">
+            Always open to interesting conversations about technology,
+            collaboration opportunities, or just to chat about ideas.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+          <nav className="flex flex-wrap gap-4" aria-label="Social links">
+            <a
+              href="https://github.com/yourname"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-medium transition-all backdrop-blur-sm border border-white/20"
+            >
+              <Github className="w-5 h-5" />
+              GitHub
+              <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </a>
+
+            <a
+              href="https://linkedin.com/in/yourname"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-medium transition-all backdrop-blur-sm border border-white/20"
+            >
+              <Linkedin className="w-5 h-5" />
+              LinkedIn
+              <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </a>
+
+            <a
+              href="mailto:your.email@example.com"
+              className="group flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-medium transition-all backdrop-blur-sm border border-white/20"
+            >
+              <Mail className="w-5 h-5" />
+              Email
+            </a>
+          </nav>
+        </section>
+
+        {/* Footer */}
+        <Footer />
       </main>
     </div>
   );

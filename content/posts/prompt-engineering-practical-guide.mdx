@@ -1,0 +1,140 @@
+---
+title: "Prompt Engineering: Practical Tips That Actually Work"
+description: "Real-world prompt engineering techniques for better, more reliable AI outputs."
+date: "2026-01-22"
+tags: ["prompt-engineering", "genai", "llms"]
+---
+
+Prompt engineering is often overcomplicated.
+
+In practice, it’s less about clever wording and more about **clear constraints, structure, and intent**.
+
+This post covers **practical techniques** that consistently improve results.
+
+---
+
+## The mental model to keep
+
+A language model responds best when it knows:
+
+1. **Who it is**
+2. **What it should do**
+3. **What constraints exist**
+4. **What a good output looks like**
+
+Most bad prompts fail at one of these.
+
+---
+
+## 1. Assign a clear role
+
+Bad:
+
+> Explain this code.
+
+Better:
+
+> You are a senior frontend engineer. Explain this code to a junior developer.
+
+Roles shape tone, depth, and assumptions.
+
+---
+
+## 2. Be explicit about format
+
+Models are excellent at following structure _if you give one_.
+
+Example:
+Answer in the following format:
+
+- Summary
+
+- Key risks
+
+- Suggested improvements
+
+This drastically reduces rambling and hallucination.
+
+---
+
+## 3. Constrain the scope
+
+Instead of:
+
+> Improve this system design.
+
+Try:
+
+> Suggest improvements focusing only on scalability and observability.
+
+Constraints improve relevance.
+
+---
+
+## 4. Provide examples (few-shot prompting)
+
+If consistency matters, show an example.
+
+> Input:
+> X
+> Output:
+> Y
+
+> Now do the same for:
+> Z
+
+Models generalize patterns extremely well.
+
+---
+
+## 5. Ask for reasoning — selectively
+
+Asking _why_ helps for:
+
+- analysis
+- comparisons
+- trade-offs
+
+But avoid it when:
+
+- you only need a result
+- verbosity is costly
+
+Use reasoning deliberately, not by default.
+
+---
+
+## 6. Iterate, don’t perfect
+
+Good prompts are **discovered**, not written once.
+
+Treat prompting like:
+
+- debugging
+- API design
+- UX copy
+
+Small changes compound.
+
+---
+
+## Common mistakes
+
+- Overloading a single prompt
+- Expecting correctness without validation
+- Treating prompts as static assets
+- Forgetting that model updates change behavior
+
+---
+
+## Final takeaway
+
+Prompt engineering isn’t magic.
+
+It’s:
+
+- clear communication
+- structured thinking
+- iterative refinement
+
+If you approach it like software design, you’ll get far better results than chasing prompt “hacks”.

@@ -1,0 +1,132 @@
+---
+title: "React vs Next.js: Choosing the Right Setup for Production"
+description: "A practical comparison of React and Next.js with scalability, trade-offs, and best practices."
+date: "2026-01-25"
+tags: ["react", "nextjs", "frontend", "architecture"]
+---
+
+“Should I use React or Next.js?” is a common question — but it’s also the wrong framing.
+
+Next.js is not a replacement for React.
+It’s an **opinionated framework built on top of React**.
+
+The real question is: _what problem are you solving?_
+
+---
+
+## Plain React (SPA) — strengths and limits
+
+### Advantages
+
+- full control over architecture
+- simple mental model
+- flexible backend choices
+- excellent for internal tools and dashboards
+
+### Limitations
+
+- SEO requires extra work
+- routing and data fetching are manual
+- performance optimizations are your responsibility
+- code-splitting is easy to get wrong
+
+React shines when:
+
+- SEO is not critical
+- you control the runtime environment
+- speed of iteration matters more than structure
+
+---
+
+## Next.js — what it adds
+
+Next.js provides:
+
+- file-based routing
+- server-side rendering (SSR)
+- static generation (SSG)
+- API routes
+- built-in performance optimizations
+
+These are not “nice to haves” at scale — they become **operational necessities**.
+
+---
+
+## Trade-offs to be aware of
+
+### Pros
+
+- strong defaults
+- excellent SEO
+- great performance out of the box
+- fewer architectural decisions to make
+
+### Cons
+
+- steeper learning curve
+- framework constraints
+- server/client boundary complexity
+- harder mental model for juniors
+
+Next.js gives leverage — but at the cost of flexibility.
+
+---
+
+## Scalability considerations
+
+At scale, Next.js helps with:
+
+- partial rendering
+- streaming
+- caching strategies
+- edge deployments
+
+But scalability also depends on:
+
+- data access patterns
+- API design
+- caching discipline
+- component boundaries
+
+The framework won’t save bad architecture.
+
+---
+
+## Best practices (hard-earned)
+
+- Keep server components **pure**
+- Isolate client components aggressively
+- Avoid premature optimization
+- Treat data fetching as part of architecture
+- Don’t fight the framework
+
+If you find yourself “working around” Next.js constantly, reassess your design.
+
+---
+
+## When to choose what
+
+### Choose React (SPA) if:
+
+- SEO doesn’t matter
+- app is highly interactive
+- backend is fully separate
+- you want maximum control
+
+### Choose Next.js if:
+
+- content matters
+- SEO is important
+- performance is critical
+- you want strong conventions
+
+---
+
+## Final thoughts
+
+Frameworks don’t make good products — decisions do.
+
+React gives you freedom.
+Next.js gives you structure.
+
+The best teams know **when to trade one for the other**.
