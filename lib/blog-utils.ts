@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+// import fs from "fs";
+// import path from "path";
 
 /**
  * Convert a title to a URL-friendly slug
@@ -37,52 +37,52 @@ tags: ${JSON.stringify(data.tags)}
 /**
  * Save blog post as MDX file
  */
-export function saveBlogPost(
-  slug: string,
-  content: string
-): {
-  success: boolean;
-  message: string;
-  filepath?: string;
-  error?: string;
-} {
-  try {
-    const postsDir = path.join(process.cwd(), "content", "posts");
+// export function saveBlogPost(
+//   slug: string,
+//   content: string
+// ): {
+//   success: boolean;
+//   message: string;
+//   filepath?: string;
+//   error?: string;
+// } {
+//   try {
+//     const postsDir = path.join(process.cwd(), "content", "posts");
 
-    // Create directory if it doesn't exist
-    if (!fs.existsSync(postsDir)) {
-      fs.mkdirSync(postsDir, { recursive: true });
-    }
+//     // Create directory if it doesn't exist
+//     if (!fs.existsSync(postsDir)) {
+//       fs.mkdirSync(postsDir, { recursive: true });
+//     }
 
-    const filepath = path.join(postsDir, `${slug}.mdx`);
+//     const filepath = path.join(postsDir, `${slug}.mdx`);
 
-    // Check if file already exists
-    if (fs.existsSync(filepath)) {
-      return {
-        success: false,
-        message: `Post with slug "${slug}" already exists`,
-        error: "SLUG_EXISTS",
-      };
-    }
+//     // Check if file already exists
+//     if (fs.existsSync(filepath)) {
+//       return {
+//         success: false,
+//         message: `Post with slug "${slug}" already exists`,
+//         error: "SLUG_EXISTS",
+//       };
+//     }
 
-    // Write file
-    fs.writeFileSync(filepath, content, "utf8");
+//     // Write file
+//     fs.writeFileSync(filepath, content, "utf8");
 
-    return {
-      success: true,
-      message: `Blog post saved successfully at ${filepath}`,
-      filepath,
-    };
-  } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
-    return {
-      success: false,
-      message: `Failed to save blog post: ${errorMessage}`,
-      error: errorMessage,
-    };
-  }
-}
+//     return {
+//       success: true,
+//       message: `Blog post saved successfully at ${filepath}`,
+//       filepath,
+//     };
+//   } catch (error) {
+//     const errorMessage =
+//       error instanceof Error ? error.message : "Unknown error";
+//     return {
+//       success: false,
+//       message: `Failed to save blog post: ${errorMessage}`,
+//       error: errorMessage,
+//     };
+//   }
+// }
 
 /**
  * Validate blog post data

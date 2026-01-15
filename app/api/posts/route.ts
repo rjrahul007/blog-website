@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   generateSlug,
   formatBlogPost,
-  saveBlogPost,
   validateBlogPost,
 } from "@/lib/blog-utils";
 
@@ -20,9 +19,7 @@ async function commitToGitHub(
     const githubRepo = process.env.GITHUB_REPO;
 
     if (!githubToken || !githubRepo) {
-      console.warn(
-        "⚠️  GitHub credentials not configured. Post saved locally but not committed."
-      );
+      console.warn("⚠️  GitHub credentials not configured.");
       return { success: false, error: "GitHub credentials not configured" };
     }
 
@@ -146,17 +143,17 @@ export async function POST(request: NextRequest) {
       content: body.content,
     });
 
-    // Save file
-    const result = saveBlogPost(slug, mdxContent);
+    // // Save file
+    // const result = saveBlogPost(slug, mdxContent);
 
-    if (!result.success) {
-      // Return appropriate status code based on error type
-      const statusCode = result.error === "SLUG_EXISTS" ? 409 : 500;
-      return NextResponse.json(
-        { error: result.message },
-        { status: statusCode }
-      );
-    }
+    // if (!result.success) {
+    //   // Return appropriate status code based on error type
+    //   const statusCode = result.error === "SLUG_EXISTS" ? 409 : 500;
+    //   return NextResponse.json(
+    //     { error: result.message },
+    //     { status: statusCode }
+    //   );
+    // }
 
     // Attempt to commit to GitHub (doesn't block if fails)
     const gitCommit = await commitToGitHub(slug, mdxContent, body.title);
@@ -164,7 +161,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        message: result.message,
+        message: "Blog post created successfully",
         post: {
           slug,
           title: body.title,

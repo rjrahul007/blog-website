@@ -213,7 +213,7 @@ export default function AdminPage() {
             )}
             {!tokenError && (
               <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-                Use "example007" as the admin token
+                Use &quot;example007&quot; as the admin token
               </p>
             )}
           </div>
