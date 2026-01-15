@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
 import { ArrowRight, Github, Linkedin, Mail, ExternalLink } from "lucide-react";
-import ThemeToggle from "@/components/theme-toggle";
 import Footer from "@/components/footer";
 
 export default function HomePage() {
@@ -51,7 +50,7 @@ export default function HomePage() {
                 aria-label="Primary actions"
               >
                 <Link
-                  href="#contact"
+                  href="mailto:rjrahool007@gmail.com"
                   className="group px-6 py-3 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
                 >
                   Get in touch
@@ -144,7 +143,7 @@ export default function HomePage() {
 
           <nav className="flex flex-wrap gap-4" aria-label="Social links">
             <a
-              href="https://github.com/yourname"
+              href="https://github.com/rjrahul007"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-medium transition-all backdrop-blur-sm border border-white/20"
@@ -155,7 +154,7 @@ export default function HomePage() {
             </a>
 
             <a
-              href="https://linkedin.com/in/yourname"
+              href="https://www.linkedin.com/in/rjrahool007"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-medium transition-all backdrop-blur-sm border border-white/20"
@@ -166,7 +165,7 @@ export default function HomePage() {
             </a>
 
             <a
-              href="mailto:your.email@example.com"
+              href="mailto:rjrahool007@gmail.com"
               className="group flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-medium transition-all backdrop-blur-sm border border-white/20"
             >
               <Mail className="w-5 h-5" />
