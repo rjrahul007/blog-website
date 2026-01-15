@@ -7,6 +7,88 @@ import {
 } from "@/lib/blog-utils";
 
 /**
+ * Commit post to GitHub repository
+ * Automatically creates a commit with the new post
+ */
+async function commitToGitHub(
+  slug: string,
+  content: string,
+  title: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const githubToken = process.env.GITHUB_TOKEN;
+    const githubRepo = process.env.GITHUB_REPO;
+
+    if (!githubToken || !githubRepo) {
+      console.warn(
+        "⚠️  GitHub credentials not configured. Post saved locally but not committed."
+      );
+      return { success: false, error: "GitHub credentials not configured" };
+    }
+
+    const [owner, repo] = githubRepo.split("/");
+    const filePath = `content/posts/${slug}.mdx`;
+
+    // Get the current file SHA if it exists (for updates)
+    let sha: string | undefined;
+    try {
+      const existingFile = await fetch(
+        `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
+        {
+          headers: {
+            Authorization: `token ${githubToken}`,
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        }
+      );
+
+      if (existingFile.ok) {
+        const data = await existingFile.json();
+        sha = data.sha;
+      }
+    } catch {
+      // File doesn't exist yet, which is fine
+    }
+
+    // Commit the file to GitHub
+    const response = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `token ${githubToken}`,
+          "X-GitHub-Api-Version": "2022-11-28",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: `Add blog post: ${title}`,
+          content: Buffer.from(content).toString("base64"),
+          branch: "main",
+          ...(sha && { sha }),
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error("GitHub commit error:", error);
+      return {
+        success: false,
+        error: error.message || "Failed to commit to GitHub",
+      };
+    }
+
+    console.log(`✅ Post committed to GitHub: ${filePath}`);
+    return { success: true };
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    console.error("Error committing to GitHub:", errorMessage);
+    return { success: false, error: errorMessage };
+  }
+}
+
+/**
  * Authenticate admin requests
  * In production, use proper JWT or session authentication
  */
@@ -76,6 +158,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Attempt to commit to GitHub (doesn't block if fails)
+    const gitCommit = await commitToGitHub(slug, mdxContent, body.title);
+
     return NextResponse.json(
       {
         success: true,
@@ -87,6 +172,12 @@ export async function POST(request: NextRequest) {
           date: body.date,
           tags: body.tags,
         },
+        git: gitCommit.success
+          ? { committed: true, message: "Post committed to GitHub" }
+          : {
+              committed: false,
+              warning: gitCommit.error || "GitHub commit failed",
+            },
       },
       { status: 201 }
     );

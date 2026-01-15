@@ -36,7 +36,7 @@ export default function AdminPage() {
   const [tokenError, setTokenError] = useState("");
 
   const handleUnlock = () => {
-    if (adminToken === "example007") {
+    if (adminToken === "rjrahool007") {
       setShowTokenInput(false);
       setTokenError("");
     } else {

@@ -18,13 +18,59 @@ openssl rand -hex 32
 ADMIN_TOKEN=your-generated-token-here
 ```
 
-### 3. Access Admin Panel
+### 3. (Optional) Set Up GitHub Auto-Commit
+
+For automatic GitHub commits when creating posts (recommended for production):
+
+1. Create GitHub Personal Access Token:
+   - Go to https://github.com/settings/tokens
+   - Click "Generate new token" → "Generate new token (classic)"
+   - Scopes: Select `repo` (full control of private repositories)
+   - Copy the token
+
+2. Add to `.env.local`:
+
+```env
+GITHUB_TOKEN=your_github_token
+GITHUB_REPO=yourusername/your-repo-name
+```
+
+**How it works:**
+- When you create a post via admin panel, it automatically commits to GitHub
+- GitHub triggers a deployment on Vercel (or your hosting)
+- Post goes live automatically - no manual commits needed!
+
+### 4. Access Admin Panel
 
 ```
 http://localhost:3000/admin
 ```
 
 Paste your token and click "Unlock" to start creating posts.
+
+---
+
+## How It Works in Production
+
+### Without GitHub Auto-Commit
+
+1. Create post via admin panel
+2. Post is saved locally as `.mdx` file
+3. **You must manually commit and push to GitHub**
+4. GitHub triggers deployment
+5. Post goes live
+
+⚠️ **Note:** On Vercel/serverless, files are ephemeral. Without auto-commit, posts disappear on redeployment.
+
+### With GitHub Auto-Commit ✅ (Recommended)
+
+1. Create post via admin panel
+2. Post is saved locally as `.mdx` file
+3. **API automatically commits to GitHub**
+4. GitHub webhook triggers deployment automatically
+5. Post goes live instantly
+
+**You never have to commit manually!**
 
 ---
 
@@ -39,6 +85,18 @@ Paste your token and click "Unlock" to start creating posts.
 5. **Content**: Write in Markdown or MDX format
 
 Click "Publish Post" and your post is saved to `content/posts/[slug].mdx`
+
+If GitHub is configured, it will auto-commit. Check the response for the `git` status:
+
+```json
+{
+  "success": true,
+  "git": {
+    "committed": true,
+    "message": "Post committed to GitHub"
+  }
+}
+```
 
 ### Via API
 
@@ -83,7 +141,7 @@ console.log(data);
 
 Write posts using standard Markdown or MDX:
 
-```markdown
+````markdown
 # Heading 1
 
 ## Heading 2
@@ -99,6 +157,7 @@ Write posts using standard Markdown or MDX:
 // Code blocks
 const hello = "world";
 ```
+````
 
 > Blockquotes
 
@@ -112,6 +171,7 @@ const hello = "world";
 ### POST /api/posts
 
 **Headers**:
+
 - `Authorization: Bearer TOKEN` (required)
 - `Content-Type: application/json`
 
@@ -128,6 +188,7 @@ const hello = "world";
 ```
 
 **Response Codes**:
+
 - `201`: Success
 - `400`: Validation error
 - `401`: Unauthorized
@@ -145,9 +206,17 @@ const hello = "world";
     "title": "My Post",
     "date": "2024-01-15",
     "tags": ["tag1"]
+  },
+  "git": {
+    "committed": true,
+    "message": "Post committed to GitHub"
   }
 }
 ```
+
+The `git` field shows:
+- `committed: true` - Post was auto-committed to GitHub
+- `committed: false` - Commit failed or not configured (post still saved locally)
 
 ---
 
@@ -195,10 +264,21 @@ Posts are plain `.mdx` files - edit them directly:
 vim content/posts/my-post.mdx
 ```
 
+If using GitHub auto-commit, you must manually commit your edits:
+
+```bash
+git add content/posts/my-post.mdx
+git commit -m "Update: my-post.mdx"
+git push
+```
+
 ### Delete Posts
 
 ```bash
 rm content/posts/my-post.mdx
+git add content/posts/my-post.mdx
+git commit -m "Remove: my-post.mdx"
+git push
 ```
 
 ### Change Admin Token
@@ -244,6 +324,7 @@ for (const post of posts) {
 ### Generate Different Slugs
 
 Slugs are auto-generated from titles:
+
 - Lowercased
 - Special characters removed
 - Spaces converted to hyphens
@@ -278,6 +359,14 @@ Example: `"My First React Post!"` → `my-first-react-post`
 - Wrong token
 - Verify format: `Authorization: Bearer TOKEN`
 
+### GitHub Auto-Commit Not Working
+
+- Verify `GITHUB_TOKEN` is set in `.env.local`
+- Check token has `repo` scope
+- Verify `GITHUB_REPO` format: `owner/repo-name`
+- Check post was saved locally first
+- Server console will show errors
+
 ### API Returns 500
 
 - Check server console for error details
@@ -298,7 +387,7 @@ Example: `"My First React Post!"` → `my-first-react-post`
 
 **Content**:
 
-```markdown
+````markdown
 # Getting Started with Next.js 14
 
 Next.js 14 brings powerful new features for building modern web applications.
@@ -318,6 +407,7 @@ npx create-next-app@latest my-app
 cd my-app
 npm run dev
 ```
+````
 
 ## Your First Page
 
@@ -341,6 +431,7 @@ export default function Home() {
 - Learn about Server Components
 - Explore API routes
 - Build a full-stack application
+
 ```
 
 ---
@@ -348,19 +439,24 @@ export default function Home() {
 ## Security Notes
 
 1. **Keep Token Secret**
-   - Don't commit `.env.local`
+   - Don't commit `.env.local` to Git
+   - `.gitignore` should include `.env.local`
    - Don't share token publicly
-   - Regenerate if compromised
 
-2. **In Production**
-   - Use proper JWT or session auth
-   - Add rate limiting
-   - Enable HTTPS
-   - Implement request logging
+2. **GitHub Token**
+   - Create a separate token for this (don't reuse existing ones)
+   - Can revoke anytime: https://github.com/settings/tokens
+   - Never commit to Git
 
-3. **File Permissions**
+3. **In Production**
+   - Use environment variables from hosting provider
+   - Vercel: Settings → Environment Variables
+   - Add GITHUB_TOKEN and GITHUB_REPO there
+   - Never commit secrets to repository
+
+4. **File Permissions**
    - Ensure `content/posts/` is writable
-   - Plan backup strategy
+   - Plan regular backups
 
 ---
 
@@ -373,3 +469,4 @@ export default function Home() {
 5. Deploy with your admin token as environment variable
 
 Happy blogging! 📝
+```
