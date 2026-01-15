@@ -23,6 +23,7 @@ ADMIN_TOKEN=your-generated-token-here
 For automatic GitHub commits when creating posts (recommended for production):
 
 1. Create GitHub Personal Access Token:
+
    - Go to https://github.com/settings/tokens
    - Click "Generate new token" → "Generate new token (classic)"
    - Scopes: Select `repo` (full control of private repositories)
@@ -36,6 +37,7 @@ GITHUB_REPO=yourusername/your-repo-name
 ```
 
 **How it works:**
+
 - When you create a post via admin panel, it automatically commits to GitHub
 - GitHub triggers a deployment on Vercel (or your hosting)
 - Post goes live automatically - no manual commits needed!
@@ -215,6 +217,7 @@ const hello = "world";
 ```
 
 The `git` field shows:
+
 - `committed: true` - Post was auto-committed to GitHub
 - `committed: false` - Commit failed or not configured (post still saved locally)
 

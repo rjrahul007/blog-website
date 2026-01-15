@@ -6,7 +6,7 @@
 export const SITE_CONFIG = {
   // Site URLs and naming
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-  siteName: process.env.NEXT_PUBLIC_SITE_NAME || "Sam | Blog",
+  siteName: process.env.NEXT_PUBLIC_SITE_NAME || "Rahul | Blog",
   siteDescription: "Thoughts on software, AI, and engineering",
   author: process.env.NEXT_PUBLIC_AUTHOR_NAME || "Rahul",
   email: process.env.NEXT_PUBLIC_EMAIL || "rjrahool007@gmail.com",

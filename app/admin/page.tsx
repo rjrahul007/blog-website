@@ -35,12 +35,46 @@ export default function AdminPage() {
   const [showTokenInput, setShowTokenInput] = useState(true);
   const [tokenError, setTokenError] = useState("");
 
-  const handleUnlock = () => {
-    if (adminToken === "rjrahool007") {
-      setShowTokenInput(false);
+  const handleUnlock = async () => {
+    if (!adminToken.trim()) {
+      setTokenError("Please enter a token");
+      return;
+    }
+
+    try {
       setTokenError("");
-    } else {
-      setTokenError("Invalid token. Use 'example007'");
+      setSubmitState({
+        status: "loading",
+        message: "Validating token...",
+      });
+
+      const response = await fetch("/api/validate-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: adminToken }),
+      });
+
+      const data = await response.json();
+
+      setSubmitState({
+        status: "idle",
+        message: "",
+      });
+
+      if (response.ok) {
+        setShowTokenInput(false);
+        setTokenError("");
+      } else {
+        setTokenError(data.error || "Invalid token");
+      }
+    } catch (error) {
+      setSubmitState({
+        status: "idle",
+        message: "",
+      });
+      setTokenError("Error validating token");
     }
   };
 

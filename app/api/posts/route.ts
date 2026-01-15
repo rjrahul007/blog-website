@@ -94,7 +94,7 @@ async function commitToGitHub(
  */
 function authenticateAdmin(request: NextRequest): boolean {
   const authHeader = request.headers.get("authorization");
-  const adminToken = process.env.ADMIN_TOKEN || "example007";
+  const adminToken = process.env.ADMIN_TOKEN;
 
   if (!authHeader) {
     return false;

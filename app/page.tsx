@@ -143,7 +143,7 @@ export default function HomePage() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="mailto:rjrahool007@gmail.com"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-900 rounded-lg font-medium hover:bg-slate-100 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-lg font-medium transition-colors"
             >
               <Mail className="w-5 h-5" />
               Email me
