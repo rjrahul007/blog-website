@@ -129,7 +129,11 @@ export function validateBlogPost(data: unknown): {
     errors.push("All tags must be strings");
   }
 
-  if (!post.content || typeof post.content !== "string" || !post.content.trim()) {
+  if (
+    !post.content ||
+    typeof post.content !== "string" ||
+    !post.content.trim()
+  ) {
     errors.push("Content is required and must be a non-empty string");
   }
 

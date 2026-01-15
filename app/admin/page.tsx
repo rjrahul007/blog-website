@@ -33,6 +33,16 @@ export default function AdminPage() {
 
   const [adminToken, setAdminToken] = useState("");
   const [showTokenInput, setShowTokenInput] = useState(true);
+  const [tokenError, setTokenError] = useState("");
+
+  const handleUnlock = () => {
+    if (adminToken === "example007") {
+      setShowTokenInput(false);
+      setTokenError("");
+    } else {
+      setTokenError("Invalid token. Use 'example007'");
+    }
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -147,21 +157,31 @@ export default function AdminPage() {
             <div className="flex gap-2">
               <input
                 type="password"
-                placeholder="Enter admin token"
+                placeholder="Enter admin token (example007)"
                 value={adminToken}
-                onChange={(e) => setAdminToken(e.target.value)}
+                onChange={(e) => {
+                  setAdminToken(e.target.value);
+                  setTokenError("");
+                }}
                 className="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-slate-100"
               />
               <button
-                onClick={() => setShowTokenInput(false)}
+                onClick={handleUnlock}
                 className="px-6 py-2 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-colors"
               >
                 Unlock
               </button>
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-              Admin token should be set in ADMIN_TOKEN environment variable
-            </p>
+            {tokenError && (
+              <p className="text-sm text-red-600 dark:text-red-400 mt-2">
+                {tokenError}
+              </p>
+            )}
+            {!tokenError && (
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                Use "example007" as the admin token
+              </p>
+            )}
           </div>
         )}
 
@@ -349,7 +369,7 @@ Your MDX content here...
                 Example Request
               </summary>
               <pre className="mt-2 p-3 bg-slate-900 dark:bg-slate-950 text-slate-100 rounded text-xs overflow-x-auto">
-{`curl -X POST http://localhost:3000/api/posts \\
+                {`curl -X POST http://localhost:3000/api/posts \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer YOUR_TOKEN" \\
   -d '{
