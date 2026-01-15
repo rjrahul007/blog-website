@@ -48,27 +48,27 @@ export default function AdminPage() {
         message: "Validating token...",
       });
 
-      const response = await fetch("/api/validate-token", {
-        method: "POST",
+      // Test the token with a simple GET request to /api/posts
+      const response = await fetch("/api/posts", {
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${adminToken}`,
         },
-        body: JSON.stringify({ token: adminToken }),
       });
-
-      const data = await response.json();
 
       setSubmitState({
         status: "idle",
         message: "",
       });
 
-      if (response.ok) {
-        setShowTokenInput(false);
-        setTokenError("");
-      } else {
-        setTokenError(data.error || "Invalid token");
+      if (response.status === 401) {
+        setTokenError("Invalid token - authentication failed");
+        return;
       }
+
+      // Token is valid, unlock the form
+      setShowTokenInput(false);
+      setTokenError("");
     } catch (error) {
       setSubmitState({
         status: "idle",

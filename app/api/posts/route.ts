@@ -196,9 +196,17 @@ export async function POST(request: NextRequest) {
 
 /**
  * GET /api/posts
- * Returns API documentation
+ * Returns API documentation (requires authentication for token validation)
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
+  // Check authentication for token validation
+  if (!authenticateAdmin(request)) {
+    return NextResponse.json(
+      { error: "Unauthorized: Invalid or missing admin token" },
+      { status: 401 }
+    );
+  }
+
   return NextResponse.json({
     message: "Blog Posts API",
     endpoints: {
