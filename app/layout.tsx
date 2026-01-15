@@ -61,6 +61,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script
+          async
+          defer
+          src="https://umami-csps.vercel.app/script.js"
+          data-website-id="d5c57d5d-5903-4fbc-a51b-c3a1051ae78f"
+        ></script>
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(websiteSchema),
