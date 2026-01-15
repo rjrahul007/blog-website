@@ -81,7 +81,7 @@ export default async function BlogPost({ params }: Props) {
           {/* Article Header */}
           <header className="mb-12 animate-[fadeInUp_0.6s_ease-out_both]">
             <div className="relative mb-8">
-              <div className="absolute -top-8 -left-8 w-72 h-72 bg-purple-200 dark:bg-purple-900 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[pulse_4s_ease-in-out_infinite]" />
+              <div className="absolute -top-8 -left-8 w-72 h-72 bg-purple-200 dark:bg-purple-900 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[pulse_4s_ease-in-out_infinite] pointer-events-none" />
 
               <div className="relative">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-600 dark:from-slate-100 dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent leading-tight">
@@ -89,7 +89,6 @@ export default async function BlogPost({ params }: Props) {
                 </h1>
               </div>
             </div>
-
             <div className="flex flex-wrap items-center gap-4 text-slate-600 dark:text-slate-300 mb-6">
               <time dateTime={post.date} className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
@@ -106,7 +105,6 @@ export default async function BlogPost({ params }: Props) {
                 <span>{post.readingTime}</span>
               </span>
             </div>
-
             <ShareButton title={post.title} />
           </header>
 
