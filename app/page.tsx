@@ -8,7 +8,14 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <main className="max-w-4xl mx-auto px-6 py-16 md:py-24">
+      <div className="max-w-4xl mx-auto px-6">
+        <Link href="/admin" className="inline-block pt-6">
+          <span className="px-3 py-2 bg-slate-800 dark:bg-slate-700 text-white text-sm rounded-full hover:bg-slate-700 dark:hover:bg-slate-600 transition-colors">
+            Create Blog
+          </span>
+        </Link>
+      </div>
+      <main className="max-w-4xl mx-auto px-6 py-16 md:pb-24">
         {/* Hero Section */}
         <header className="mb-20">
           <div className="relative">
