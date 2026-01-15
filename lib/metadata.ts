@@ -2,7 +2,7 @@
  * SEO and metadata utilities
  */
 
-import { SITE_CONFIG } from './config';
+import { SITE_CONFIG } from "./config";
 
 /**
  * Generate JSON-LD schema for blog posts
@@ -21,27 +21,27 @@ export function generateBlogPostSchema({
   readingTime: string;
 }) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
     headline: title,
     description,
     image: `${SITE_CONFIG.siteUrl}/og?title=${encodeURIComponent(title)}`,
     datePublished: new Date(date).toISOString(),
     author: {
-      '@type': 'Person',
+      "@type": "Person",
       name: SITE_CONFIG.author,
     },
     publisher: {
-      '@type': 'Organization',
+      "@type": "Organization",
       name: SITE_CONFIG.siteName,
       logo: {
-        '@type': 'ImageObject',
+        "@type": "ImageObject",
         url: `${SITE_CONFIG.siteUrl}/favicon.ico`,
       },
     },
     mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${SITE_CONFIG.siteUrl}/blog/${slug}`,
+      "@type": "WebPage",
+      "@id": `${SITE_CONFIG.siteUrl}/blog/${slug}`,
     },
   };
 }
@@ -51,13 +51,13 @@ export function generateBlogPostSchema({
  */
 export function generateWebsiteSchema() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Website',
+    "@context": "https://schema.org",
+    "@type": "Website",
     url: SITE_CONFIG.siteUrl,
     name: SITE_CONFIG.siteName,
     description: SITE_CONFIG.siteDescription,
     author: {
-      '@type': 'Person',
+      "@type": "Person",
       name: SITE_CONFIG.author,
     },
   };
@@ -68,8 +68,8 @@ export function generateWebsiteSchema() {
  */
 export function generatePersonSchema() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
+    "@context": "https://schema.org",
+    "@type": "Person",
     name: SITE_CONFIG.author,
     url: SITE_CONFIG.siteUrl,
     email: SITE_CONFIG.email,
