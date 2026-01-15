@@ -23,7 +23,7 @@ export default function HomePage() {
               </div>
 
               <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-600 dark:from-slate-100 dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-                Hi, I'm Rahul 👋
+                Hi, I am Rahul
               </h1>
 
               <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
@@ -114,8 +114,7 @@ export default function HomePage() {
                   </h3>
 
                   <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                    {post.excerpt ||
-                      `${post.title} - Read more about this topic.`}
+                    {post.description}
                   </p>
 
                   <div className="mt-4 flex items-center gap-2 text-purple-600 dark:text-purple-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
@@ -138,43 +137,38 @@ export default function HomePage() {
           </h2>
           <p className="text-slate-300 dark:text-slate-400 text-lg mb-8 max-w-2xl">
             Always open to interesting conversations about technology,
-            collaboration opportunities, or just to chat about ideas.
+            engineering, and the future. Reach out and let's talk!
           </p>
 
-          <nav className="flex flex-wrap gap-4" aria-label="Social links">
-            <a
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href="mailto:rjrahool007@gmail.com"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-900 rounded-lg font-medium hover:bg-slate-100 transition-colors"
+            >
+              <Mail className="w-5 h-5" />
+              Email me
+            </Link>
+            <Link
               href="https://github.com/rjrahul007"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-medium transition-all backdrop-blur-sm border border-white/20"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-lg font-medium transition-colors"
             >
               <Github className="w-5 h-5" />
               GitHub
-              <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/rjrahool007"
+            </Link>
+            <Link
+              href="https://linkedin.com/in/rjrahul007"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-medium transition-all backdrop-blur-sm border border-white/20"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-lg font-medium transition-colors"
             >
               <Linkedin className="w-5 h-5" />
               LinkedIn
-              <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </a>
-
-            <a
-              href="mailto:rjrahool007@gmail.com"
-              className="group flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-medium transition-all backdrop-blur-sm border border-white/20"
-            >
-              <Mail className="w-5 h-5" />
-              Email
-            </a>
-          </nav>
+            </Link>
+          </div>
         </section>
 
-        {/* Footer */}
         <Footer />
       </main>
     </div>

@@ -1,26 +1,3 @@
-// import Link from "next/link";
-// import { getAllPosts } from "@/lib/posts";
-
-// export default function BlogPage() {
-//   const posts = getAllPosts();
-
-//   return (
-//     <div className="max-w-3xl mx-auto p-6">
-//       <h1 className="text-3xl font-bold mb-6">Blog</h1>
-//       {posts.map((post) => (
-//         <Link key={post.slug} href={`/blog/${post.slug}`}>
-//           <div className="mb-4 p-4 border rounded-xl hover:bg-muted">
-//             <h2 className="text-xl font-semibold">{post.title}</h2>
-//             <p className="text-sm text-gray-500">
-//               {post.date} · {post.readingTime}
-//             </p>
-//           </div>
-//         </Link>
-//       ))}
-//     </div>
-//   );
-// }
-
 import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
 import { Calendar, Clock, ArrowLeft, Search } from "lucide-react";
@@ -81,9 +58,9 @@ export default function BlogPage() {
                         {post.title}
                       </h2>
 
-                      {post.excerpt && (
+                      {post.description && (
                         <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                          {post.excerpt}
+                          {post.description}
                         </p>
                       )}
                     </div>

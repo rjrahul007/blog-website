@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
+import { SITE_CONFIG } from "@/lib/config";
 
 export default function Giscus() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -18,10 +19,10 @@ export default function Giscus() {
     script.async = true;
     script.crossOrigin = "anonymous";
 
-    script.setAttribute("data-repo", "rjrahul007/blog-website");
-    script.setAttribute("data-repo-id", "R_kgDOQ5NwtA");
-    script.setAttribute("data-category", "Blog Comments");
-    script.setAttribute("data-category-id", "DIC_kwDOQ5NwtM4C09R0");
+    script.setAttribute("data-repo", SITE_CONFIG.giscus.repo);
+    script.setAttribute("data-repo-id", SITE_CONFIG.giscus.repoId);
+    script.setAttribute("data-category", SITE_CONFIG.giscus.category);
+    script.setAttribute("data-category-id", SITE_CONFIG.giscus.categoryId);
     script.setAttribute("data-mapping", "pathname");
     script.setAttribute("data-strict", "0");
     script.setAttribute("data-reactions-enabled", "1");
@@ -56,59 +57,6 @@ export default function Giscus() {
       "https://giscus.app"
     );
   }, [resolvedTheme]);
-  return <div ref={containerRef} className="mt-16" />;
+
+  return <div ref={containerRef} />;
 }
-
-// {
-//   /* <script
-//   src="https://giscus.app/client.js"
-//   data-repo="rjrahul007/blog-website"
-//   data-repo-id="R_kgDOQ5NwtA"
-//   data-category="Blog Comments"
-//   data-category-id="DIC_kwDOQ5NwtM4C09R0"
-//   data-mapping="pathname"
-//   data-strict="0"
-//   data-reactions-enabled="1"
-//   data-emit-metadata="0"
-//   data-input-position="bottom"
-//   data-theme="preferred_color_scheme"
-//   data-lang="en"
-//   crossorigin="anonymous"
-//   async
-// ></script>; */
-// }
-
-// "use client";
-
-// import { useEffect } from "react";
-
-// export default function Giscus() {
-//   useEffect(() => {
-//     // Load the web component once
-//     if (!customElements.get("giscus-widget")) {
-//       const script = document.createElement("script");
-//       script.src = "https://giscus.app/client.js";
-//       script.async = true;
-//       script.crossOrigin = "anonymous";
-//       document.body.appendChild(script);
-//     }
-//   }, []);
-
-//   return (
-//     <script
-//       src="https://giscus.app/client.js"
-//       data-repo="rjrahul007/blog-website"
-//       data-repo-id="R_kgDOQ5NwtA"
-//       data-category="Blog Comments"
-//       data-category-id="DIC_kwDOQ5NwtM4C09R0"
-//       data-mapping="pathname"
-//       data-strict="0"
-//       data-reactions-enabled="1"
-//       data-emit-metadata="0"
-//       data-input-position="bottom"
-//       data-theme="preferred_color_scheme"
-//       data-lang="en"
-//       async
-//     ></script>
-//   );
-// }

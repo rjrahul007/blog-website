@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./provider";
+import { SITE_CONFIG } from "@/lib/config";
+import { generateWebsiteSchema, generatePersonSchema } from "@/lib/metadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,23 +15,64 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_CONFIG.siteUrl),
   title: {
-    default: "Sam | Blog",
+    default: SITE_CONFIG.siteName,
     template: "%s | Sam",
   },
-  description: "Thoughts on software, AI, and engineering",
+  description: SITE_CONFIG.siteDescription,
+  keywords: ["blog", "software", "engineering", "AI", "tech"],
+  authors: [
+    {
+      name: SITE_CONFIG.author,
+      url: SITE_CONFIG.siteUrl,
+    },
+  ],
+  creator: SITE_CONFIG.author,
   openGraph: {
     type: "website",
+    locale: "en_US",
+    url: SITE_CONFIG.siteUrl,
+    siteName: SITE_CONFIG.siteName,
+    title: SITE_CONFIG.siteName,
+    description: SITE_CONFIG.siteDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_CONFIG.siteName,
+    description: SITE_CONFIG.siteDescription,
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const websiteSchema = generateWebsiteSchema();
+  const personSchema = generatePersonSchema();
+
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personSchema),
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
